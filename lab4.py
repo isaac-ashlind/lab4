@@ -86,7 +86,7 @@ def getInputFromUser():
 
 def test():
     while True:
-        user_input = input()
+        user_input = input("Press ENTER to test game board, QUIT to exit")
         if user_input.upper() == 'QUIT':
             return
         else:
