@@ -11,6 +11,14 @@ Lights Out game for the command line
 
 import random
 
+def test():
+    while True:
+        inputFromUser = getInputFromUser()
+        if inputFromUser:
+            row, column = inputFromUser
+        else:
+            return
+        gameBoard(createTable())
 
 def main():
     while True:
@@ -19,7 +27,7 @@ def main():
             row, column = inputFromUser
         else:
             return
-           
+        gameBoard(createTable())
 
 # Generate a 5 X 5 table
 def createTable():
@@ -28,7 +36,7 @@ def createTable():
         for i in range(5):
             row.append(0)
     # Simulate gameplay to randomly populate board with "lights"
-    for i in range(25):
+    for i in range(10):
         row = random.randint(0, 4)
         column = random.randint(0, 4)
         gameRules(row, column, table)
@@ -49,7 +57,6 @@ def gameBoard(table):
                 print("\N{BLACK SQUARE}", end=' ')
         print()
 
-
 # Will flip color of squares to the opposite color
 def gameRules(row, column, table):
     def flipValue(row, column):
@@ -58,19 +65,16 @@ def gameRules(row, column, table):
             value = 1
         elif value == 1:
             value = 0
-        table[row][column] = value
-    
-    # test for boundaries
-    flipValue(row, column)
+
     if row != 0:
         flipValue(row - 1, column)
     if column != 0:
         flipValue(row, column -1)
+    flipValue(row, column)
     if column != 4:
         flipValue(row, column + 1)
     if row != 4:    
         flipValue(row + 1, column)
-
 
 def getInputFromUser():
     inputMessage = "Please choose a row (1–5) and column (A–E) (Example: 1A)."
@@ -83,16 +87,5 @@ def getInputFromUser():
         column = inputFromUser[1]
         return row, column
 
-
-def test():
-    while True:
-        user_input = input("Press ENTER to test game board, QUIT to exit")
-        if user_input.upper() == 'QUIT':
-            return
-        else:
-            gameBoard(createTable())
-
-
-test()
-#if __name__ == '__main__':
-#    main()
+if __name__ == '__main__':
+    main()
