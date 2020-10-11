@@ -87,6 +87,12 @@ def getInputFromUser():
 		column = inputFromUser[1]
 		return row, column
 
+def isComplete(table):
+	for row in table:
+		if row == 1:
+			return False
+	return True
+
 def main():
 	userInput = input("Press ENTER to start game; type quit to exit.\n— ")
 	if userInput.lower() == 'quit':
@@ -100,6 +106,9 @@ def main():
 			row, column = inputFromUser
 			gameRules(row, column, table)
 			gameBoard(table)
+			if isComplete(table):
+				print("Congratulations! You won the game!")
+				return
 		else:
 			return
 
