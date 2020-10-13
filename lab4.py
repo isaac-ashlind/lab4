@@ -1,10 +1,10 @@
 """
 lab4.py
 
-Isaac AshLind ia378@nau.edu
-Lucas Gerosa 
+Isaac AshLind
+Lucas Gerosa
 
-Description: 
+Description:
 Lights Out game for the command line
 """
 
@@ -63,7 +63,8 @@ def gameRules(row, column, table):
 
 
 def getInputFromUser():
-    inputMessage = "\nPlease choose a row (1–5) and column (A–E) (Example: 1A)\n"
+    inputMessage = ("\nPlease choose a row (1–5) and column (A–E)"
+                    "(Example: 1A)\n")
     while True:
         inputFromUser = input(inputMessage)
         if inputFromUser.lower == 'quit':
@@ -77,7 +78,7 @@ def getInputFromUser():
             input1 = inputFromUser[1]
         if (input0 in "12345") and (input1.lower() in "abcde"):
             row = int(input0) - 1
-            column = ord(input1) - 97  #converts letters into 0–4
+            column = ord(input1) - 97  # converts letters into 0–4
             pass
         # Let's the user input column and row in reverse order
         elif (input0.lower() in "abcde") and (input1 in "12345"):
