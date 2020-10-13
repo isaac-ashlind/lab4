@@ -21,7 +21,7 @@ def createTable():
     for i in range(25):
         row = random.randint(0, 4)
         column = random.randint(0, 4)
-        gameRules(row + 1, column + 1, table)
+        gameRules(row, column, table)
     return table
 
 
@@ -42,23 +42,6 @@ def gameBoard(table):
 
 # Will flip color of squares to the opposite color
 def gameRules(row, column, table):
-    if type(column) is str:
-        if column.lower() in "abcde":
-            column = ord(column) - 96  #converts letters into 0–4
-        elif column in "12345":
-            column = int(column)
-        else:
-            raise Exception(
-                "Non-valid column. (only values 1–5 and A–E are accepted)")
-    elif type(column) is int:
-        if column > 5 or column < 1:
-            raise Exception(
-                f"Non-valid column. (only values 1–5 and A–E are accepted, and you put in a {column})"
-            )
-    row = int(row)
-    column -= 1  #converts 1–5 to 0–4
-    row -= 1
-
     def flipValue(row, column):
         value = table[row][column]
         if value == 0:
@@ -80,14 +63,30 @@ def gameRules(row, column, table):
 
 
 def getInputFromUser():
-    inputMessage = "\nPlease choose a row (1–5) and column (A–E) (Example: 1A)."
-    inputFromUser = input(inputMessage)
-    if inputFromUser == 'QUIT':
-        print("Quitting function.")
-        return False
-    else:
-        row = inputFromUser[0]
-        column = inputFromUser[1]
+    inputMessage = "\nPlease choose a row (1–5) and column (A–E) (Example: 1A)\n"
+    while True:
+        inputFromUser = input(inputMessage)
+        if inputFromUser.lower == 'quit':
+            print("Quitting game")
+            return False
+        elif len(inputFromUser) != 2:
+            print("\nNon-valid input (must choose 1–5 and A–E)")
+            continue
+        else:
+            input0 = inputFromUser[0]
+            input1 = inputFromUser[1]
+        if (input0 in "12345") and (input1.lower() in "abcde"):
+            row = int(input0) - 1
+            column = ord(input1) - 97  #converts letters into 0–4
+            pass
+        # Let's the user input column and row in reverse order
+        elif (input0.lower() in "abcde") and (input1 in "12345"):
+            row = int(input1) - 1
+            column = ord(input0) - 97
+            pass
+        else:
+            print("\nNon-valid input (must choose 1–5 and A–E)")
+            continue
         return row, column
 
 
@@ -106,17 +105,17 @@ def main():
         return
     table = createTable()
     gameBoard(table)
-    while True:
+    numberMoves = 0
+    while not isComplete(table):
         inputFromUser = getInputFromUser()
         if inputFromUser:
             row, column = inputFromUser
             gameRules(row, column, table)
             gameBoard(table)
-            if isComplete(table):
-                print("Congratulations! You won the game!")
-                return
-        else:
-            return
+            numberMoves += 1
+
+    print(f"Congratulations! You won the game in {numberMoves} moves!")
+    input("Press ENTER to quit")
 
 
 if __name__ == '__main__':
